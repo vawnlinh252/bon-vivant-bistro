@@ -1,14 +1,13 @@
 import { Resend } from 'resend';
 import type { ReservationFormData } from '@/types/reservation';
 
-const resendApiKey = process.env.RESEND_API_KEY;
-const resend = resendApiKey ? new Resend(resendApiKey) : null;
-
 export async function sendReservationEmail(
   data: ReservationFormData,
   bookingRef: string
 ): Promise<{ success: boolean; error?: string }> {
-  const recipient = process.env.RESERVATION_NOTIFICATION_EMAIL || 'host@bonvivantbistro.vn';
+  const apiKey = process.env.RESEND_API_KEY;
+  const recipient = process.env.RESERVATION_NOTIFICATION_EMAIL || 'thomaspham25.2@gmail.com';
+  const fromEmail = process.env.RESEND_FROM_EMAIL || 'Bon Vivant Bistro <onboarding@resend.dev>';
 
   const htmlContent = `
     <!DOCTYPE html>
@@ -75,15 +74,16 @@ export async function sendReservationEmail(
     </html>
   `;
 
-  if (!resend) {
+  if (!apiKey) {
     console.log('[Resend Mock Mode] RESEND_API_KEY is not set. Simulated email dispatch:');
     console.log({ to: recipient, bookingRef, data });
     return { success: true };
   }
 
   try {
+    const resend = new Resend(apiKey);
     const { error } = await resend.emails.send({
-      from: 'Bon Vivant Bistro <reservations@bonvivantbistro.vn>',
+      from: fromEmail,
       to: [recipient],
       subject: `[Đặt Bàn Mới #${bookingRef}] ${data.fullName} - ${data.partySize >= 11 ? '10+ người' : `${data.partySize} người`} (${data.date} ${data.time})`,
       html: htmlContent,
