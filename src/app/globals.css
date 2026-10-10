@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bordeaux: #6B1E2E;
+  --color-bordeaux-hover: #541724;
+  --color-cream: #FDFBF7;
+  --color-cream-warm: #F5EFE4;
+  --color-gold: #B8975A;
+  --color-espresso: #2A1A1D;
+  --color-espresso-muted: #6B5A5D;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-espresso);
+  font-family: var(--font-lora), Georgia, serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom delicate gold scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FDFBF7;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4B982;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B8975A;
+}
+
+/* Hairline dividers */
+.divider-gold {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #B8975A, transparent);
+  opacity: 0.6;
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid #B8975A;
+  outline-offset: 2px;
+}
